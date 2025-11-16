@@ -1,46 +1,105 @@
 # Credit Classification
 
-Supervised learning project for predicting credit default outcomes from customer and loan characteristics.
+Supervised learning project to predict whether a loan will default using tabular customer and loan features. The aim is to build a clear, reproducible baseline credit-risk model that can be extended to more advanced approaches.
 
-## Project overview
+## 1. Overview
 
-This project builds and evaluates classification models for credit risk:
-- Exploratory data analysis of the input dataset
-- Feature engineering and data preprocessing
-- Training baseline and regularised models (for example logistic regression and tree-based methods)
-- Evaluation using metrics such as ROC-AUC, precision, recall and confusion matrices
+This repository contains a small end-to-end workflow for loan default prediction:
 
-Originally developed as part of a university coursework, the repository is structured as a standalone, reproducible machine learning project.
+* Exploratory data analysis of the loan dataset
+* Data cleaning and feature engineering
+* Training and evaluation of supervised learning models
+* Interpretation of model performance and limitations
 
-## Repository structure
+The work was originally developed as part of a university assignment, but the structure is organised to resemble a real data science project rather than a single notebook.
 
-- `src/` – Python modules for data preparation, model training and evaluation
-- `notebooks/` – Jupyter notebooks for exploration and experimentation
-- `data/` – Raw and processed data (not stored in the repo)
-- `report/` – Final written report for the project
-- `docs/` – Coursework brief and additional documentation
-- `requirements.txt` – Python dependencies
-- `.gitignore` – Files and folders excluded from version control
+## 2. Data
 
-## How to run
+The project assumes a single CSV file with one row per loan and a binary target variable indicating default vs non-default, together with customer and loan attributes.
 
-1. Clone the repository:
+The dataset is stored locally and not committed to the repository. A typical local layout is:
 
-   git clone git@github.com:abailey81/Credit-Classification.git  
+* `data/raw/dataset.csv` – original dataset
+* `data/processed/` – any cleaned or engineered versions
+
+You can adjust the paths inside the notebook or scripts if your filenames differ.
+
+## 3. Methodology
+
+The modelling workflow follows a standard supervised learning pipeline for credit risk:
+
+1. **Preprocessing and feature engineering**
+
+   * Handling missing values
+   * Encoding categorical variables
+   * Scaling or normalising numerical features where appropriate
+
+2. **Model training**
+
+   * Baseline models such as logistic regression
+   * Optionally, comparison with tree-based methods (for example random forests or gradient boosting)
+
+3. **Evaluation**
+
+   * Train/validation split or cross-validation
+   * Metrics including ROC-AUC, accuracy, precision, recall and confusion matrices
+   * Qualitative discussion of where the model performs well or poorly
+
+Most of the experimentation currently lives in `notebooks/Loan prediction.ipynb`. As the project evolves, more logic can be refactored into reusable modules under `src/`.
+
+## 4. Repository structure
+
+```text
+.
+├── notebooks/          # Jupyter notebooks for exploration and modelling
+│   └── Loan prediction.ipynb
+├── src/                # Python modules (data prep, training, evaluation)
+├── requirements.txt    # Python dependencies
+├── .gitignore          # Ignore rules (data, caches, IDE files, etc.)
+└── README.md           # Project documentation
+```
+
+The `data/`, `report/` and `docs/` folders are expected to exist locally but are not tracked by git, so they do not appear in the GitHub view.
+
+## 5. Getting started
+
+1. **Clone the repository**
+
+   ```bash
+   git clone git@github.com:abailey81/Credit-Classification.git
    cd Credit-Classification
+   ```
 
-2. (Optional) Create and activate a virtual environment.
+2. **(Optional) Create and activate a virtual environment**
 
-3. Install dependencies:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate    # macOS / Linux
+   # .venv\Scripts\activate     # Windows
+   ```
 
+3. **Install dependencies**
+
+   ```bash
    pip install -r requirements.txt
+   ```
 
-4. Run a training script (once scripts are added under `src/`):
+4. **Add the dataset**
 
-   python -m src.train_model
+   Place your CSV in `data/raw/dataset.csv` (or update the notebook path accordingly).
 
-   or open a notebook from `notebooks/` to reproduce the analysis.
+5. **Run the analysis**
 
-## Results
+   ```bash
+   jupyter notebook notebooks/Loan\ prediction.ipynb
+   ```
 
-The final model performance, analysis and discussion are documented in the report PDF under `report/` (to be added).
+   From there you can reproduce the analysis, adjust features, or try alternative models.
+
+## 6. Reproducibility and next steps
+
+* Dependencies are listed in `requirements.txt`.
+* Data files are kept out of version control to avoid exposing sensitive information.
+* Random seeds can be fixed in the notebook to make results more stable between runs.
+
+Planned improvements include refactoring more code into `src/`, adding configuration files for experiments, logging model outputs, and extending evaluation to include calibration, scorecards and monitoring.
