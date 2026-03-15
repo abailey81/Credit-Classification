@@ -1,105 +1,132 @@
+<div align="center">
+
 # Credit Classification
 
-Supervised learning project to predict whether a loan will default using tabular customer and loan features. The aim is to build a clear, reproducible baseline credit-risk model that can be extended to more advanced approaches.
+### Machine Learning Loan Default Prediction
 
-## 1. Overview
+*SVM classifier · scikit-learn pipeline · feature engineering · reproducible Jupyter workflow*
 
-This repository contains a small end-to-end workflow for loan default prediction:
+<br>
 
-* Exploratory data analysis of the loan dataset
-* Data cleaning and feature engineering
-* Training and evaluation of supervised learning models
-* Interpretation of model performance and limitations
+[![Python](https://img.shields.io/badge/python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![scikit-learn](https://img.shields.io/badge/sklearn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org/)
+[![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white)](https://jupyter.org/)
+[![License](https://img.shields.io/badge/MIT-green?style=for-the-badge)](LICENSE)
 
-The work was originally developed as part of a university assignment, but the structure is organised to resemble a real data science project rather than a single notebook.
+---
 
-## 2. Data
+**End-to-end credit risk classification** predicting loan approval outcomes using an SVM classifier with StandardScaler preprocessing on 614 loan applicants.
 
-The project assumes a single CSV file with one row per loan and a binary target variable indicating default vs non-default, together with customer and loan attributes.
+<br>
 
-The dataset is stored locally and not committed to the repository. A typical local layout is:
+| Metric | Value |
+|:-------|:-----:|
+| **Test Accuracy** | 83.33% |
+| **Training Accuracy** | 79.86% |
+| **Features** | 11 |
+| **Model** | SVM (linear kernel) |
 
-* `data/raw/dataset.csv` – original dataset
-* `data/processed/` – any cleaned or engineered versions
+</div>
 
-You can adjust the paths inside the notebook or scripts if your filenames differ.
+<br>
 
-## 3. Methodology
+## Highlights
 
-The modelling workflow follows a standard supervised learning pipeline for credit risk:
+<table>
+<tr>
+<td width="50%">
 
-1. **Preprocessing and feature engineering**
+**Data Pipeline**
+- 614 loan applicants from Kaggle
+- Missing value handling and cleaning
+- Categorical to numerical encoding
+- StandardScaler normalization
 
-   * Handling missing values
-   * Encoding categorical variables
-   * Scaling or normalising numerical features where appropriate
+</td>
+<td width="50%">
 
-2. **Model training**
+**Model & Evaluation**
+- SVM with linear kernel (scikit-learn)
+- 90/10 stratified train/test split
+- Accuracy scoring on both train and test sets
+- Predictive system for new loan applications
 
-   * Baseline models such as logistic regression
-   * Optionally, comparison with tree-based methods (for example random forests or gradient boosting)
+</td>
+</tr>
+</table>
 
-3. **Evaluation**
+---
 
-   * Train/validation split or cross-validation
-   * Metrics including ROC-AUC, accuracy, precision, recall and confusion matrices
-   * Qualitative discussion of where the model performs well or poorly
+## Dataset Features
 
-Most of the experimentation currently lives in `notebooks/Loan prediction.ipynb`. As the project evolves, more logic can be refactored into reusable modules under `src/`.
+| Feature | Type | Description |
+|:--------|:-----|:------------|
+| Gender | Categorical | Male / Female |
+| Married | Categorical | Yes / No |
+| Dependents | Numeric | Number of dependents (0-4) |
+| Education | Categorical | Graduate / Not Graduate |
+| Self_Employed | Categorical | Yes / No |
+| ApplicantIncome | Numeric | Applicant income |
+| CoapplicantIncome | Numeric | Co-applicant income |
+| LoanAmount | Numeric | Loan amount (thousands) |
+| Loan_Amount_Term | Numeric | Term of loan (months) |
+| Credit_History | Binary | Credit history meets guidelines (1/0) |
+| Property_Area | Categorical | Rural / Semiurban / Urban |
 
-## 4. Repository structure
+**Target:** `Loan_Status` (Approved = 1, Denied = 0)
 
-```text
-.
-├── notebooks/          # Jupyter notebooks for exploration and modelling
-│   └── Loan prediction.ipynb
-├── src/                # Python modules (data prep, training, evaluation)
-├── requirements.txt    # Python dependencies
-├── .gitignore          # Ignore rules (data, caches, IDE files, etc.)
-└── README.md           # Project documentation
+---
+
+## ML Pipeline
+
+```
+Raw Data (614 rows, 13 columns)
+    │
+    ├── Drop missing values → 480 rows
+    ├── Encode categoricals → numerical
+    ├── Drop Loan_ID
+    │
+    ├── StandardScaler (z-score normalization)
+    ├── 90/10 stratified split (432 train / 48 test)
+    │
+    ├── SVM (linear kernel) training
+    │
+    └── Accuracy: 83.33% test / 79.86% train
 ```
 
-The `data/`, `report/` and `docs/` folders are expected to exist locally but are not tracked by git, so they do not appear in the GitHub view.
+---
 
-## 5. Getting started
+## Getting Started
 
-1. **Clone the repository**
+```bash
+git clone https://github.com/abailey81/Credit-Classification.git
+cd Credit-Classification
 
-   ```bash
-   git clone git@github.com:abailey81/Credit-Classification.git
-   cd Credit-Classification
-   ```
+pip install -r requirements.txt
+jupyter notebook notebooks/Loan\ prediction.ipynb
+```
 
-2. **(Optional) Create and activate a virtual environment**
+---
 
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate    # macOS / Linux
-   # .venv\Scripts\activate     # Windows
-   ```
+## Project Structure
 
-3. **Install dependencies**
+```
+Credit-Classification/
+├── notebooks/
+│   └── Loan prediction.ipynb    # Full analysis and modeling pipeline
+├── src/
+│   └── __init__.py              # Package placeholder
+├── requirements.txt             # pandas, numpy, scikit-learn, matplotlib, seaborn
+└── .gitignore
+```
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+---
 
-4. **Add the dataset**
+<div align="center">
 
-   Place your CSV in `data/raw/dataset.csv` (or update the notebook path accordingly).
+**[MIT License](LICENSE)**
 
-5. **Run the analysis**
+Built with scikit-learn, pandas, and Jupyter
 
-   ```bash
-   jupyter notebook notebooks/Loan\ prediction.ipynb
-   ```
-
-   From there you can reproduce the analysis, adjust features, or try alternative models.
-
-## 6. Reproducibility and next steps
-
-* Dependencies are listed in `requirements.txt`.
-* Data files are kept out of version control to avoid exposing sensitive information.
-* Random seeds can be fixed in the notebook to make results more stable between runs.
-
-Planned improvements include refactoring more code into `src/`, adding configuration files for experiments, logging model outputs, and extending evaluation to include calibration, scorecards and monitoring.
+</div>
